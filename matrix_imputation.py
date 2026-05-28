@@ -139,6 +139,12 @@ overall_rmse = np.sqrt(mean_squared_error(y_true_all, y_pred_all))
 print(f"\n{'─'*40}")
 print(f"RMSE tổng hợp (overall): {overall_rmse:.4f}")
 
+from visualizer import plot_rmse
+
+# overall_norm: RMSE tổng hợp chuẩn hoá 0-1
+overall_norm = overall_rmse / (full_data.values.max() - full_data.values.min())
+plot_rmse(rmse_df, overall_norm, out_path="rmse_chart.png")
+
 # ============================================================
 # 5. VÍ DỤ SO SÁNH: giá trị thực vs dự đoán (10 ô đầu tiên)
 # ============================================================
@@ -161,3 +167,8 @@ compare_df = pd.DataFrame(compare)
 print(compare_df.to_string(index=False))
 
 print("\n✅ Hoàn thành!")
+
+from comparison_plot import plot_comparison_top10
+
+plot_comparison_top10(full_data, M_pred, missing_mask,
+                      out_path="comparison_top10.png")
